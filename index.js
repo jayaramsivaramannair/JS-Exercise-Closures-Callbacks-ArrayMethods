@@ -83,11 +83,24 @@ finalScore(inning, 9) might return:
 
 */ 
 
-function finalScore(/*code Here*/){
-
-  /*Code Here*/
-
+function finalScore(cb, inningsNumber){
+  let home = 0;
+  let away = 0;
+  for(let i = 0; i < inningsNumber; i++) {
+    let teamAtBat = Math.floor(Math.random() * 2);
+    if (teamAtBat === 0) {
+      home += cb();
+    } else {
+      away += cb();
+    }
+  }
+  return {
+    "Home" : home,
+    "Away" : away
+  }
 }
+
+console.log(finalScore(inning, 9));
 
 /* Task 4: 
 
