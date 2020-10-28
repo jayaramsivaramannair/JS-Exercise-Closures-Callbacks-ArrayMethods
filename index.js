@@ -27,11 +27,16 @@ function processFirstItem(stringList, callback) {
  * Study the code for counter1 and counter2. Answer the questions below.
  * 
  * 1. What is the difference between counter1 and counter2?
+ * ANSWER: counter1 is set equal to the result from calling counterMaker() which includes another closure function inside of it. 
+ * This means that counter1 will now keep track of the increment in count variable between successive calls. Also count variable can be accessed only inside of counterMaker() function.
  * 
+ * counter2 increments the global variable 'count'. However, in this case, global count variable is globally accessible and can be easily mutated by any other function. 
  * 2. Which of the two uses a closure? How can you tell?
+ * ANSWER: counter1 uses a closure because it is set equal to the result from calling counterMaker() function which returns another function counter() inside of it. 
  * 
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
- *
+ * counter1 code will be preferable in scenarios where we want to keep track of a counter variable between successive calls and also reset it to 0 if needed at a later stage. 
+ * However counter2 is declared in the global scope which makes it susceptible to direct alteration or mutation. 
 */
 
 // counter1 code
@@ -39,6 +44,7 @@ function counterMaker() {
   let count = 0;
   return function counter() {
     count++;
+    return count; //This was omitted. This return statement should be included for this function to work. 
   }
 }
 
