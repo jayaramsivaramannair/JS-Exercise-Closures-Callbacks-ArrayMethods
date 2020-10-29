@@ -27,11 +27,18 @@ function processFirstItem(stringList, callback) {
  * Study the code for counter1 and counter2. Answer the questions below.
  * 
  * 1. What is the difference between counter1 and counter2?
+ * ANSWER: counter1 is set equal to the result from calling counterMaker() which returns the counter function inside it. 
+ * This means that calling counter1 will now keep track of the increment in local count variable between successive calls. 
+ * Also count variable can be accessed only inside of counterMaker() function. This ensures integrity and privacy of the variable.
+ * 
+ * counter2 increments the global variable 'count'. However, in this case, global count variable is globally accessible and can be easily mutated by any other function. 
  * 
  * 2. Which of the two uses a closure? How can you tell?
+ * ANSWER: counter1 uses a closure because it returns another function counter() inside the counterMaker function. 
  * 
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
- *
+ * counter1 code will be preferable in scenarios where we want to keep track of a count variable inside the enclosing function between successive calls.  
+ * However counter2 is declared in the global scope which makes it susceptible to direct alteration or mutation. counter2 would be better in scenarios where the count does not have to be reset.
 */
 
 // counter1 code
@@ -39,6 +46,7 @@ function counterMaker() {
   let count = 0;
   return function counter() {
     count++;
+    return count; //This was omitted. This return statement should be included for this function to work. 
   }
 }
 
@@ -56,11 +64,12 @@ function counter2() {
 
 Write a function called `inning` that generates a random number of points that a team scored in an inning. This should be a whole number between 0 and 2. */
 
-function inning(/*Code Here*/){
+function inning(){
 
-    /*Code Here*/
+  return Math.floor(Math.random() * 3);
 
 }
+console.log(inning());
 
 /* Task 3: finalScore()
 
@@ -76,11 +85,21 @@ finalScore(inning, 9) might return:
 
 */ 
 
-function finalScore(/*code Here*/){
-
-  /*Code Here*/
-
+function finalScore(inningFunc, inningsNum) {
+  let home = 0;
+  let away = 0;
+  
+  for(let i = 0; i < inningsNum; i++) {
+      home += inningFunc();
+      away += inningFunc();
+  }
+  return {
+      "Home" : home,
+      "Away" : away
+  }
 }
+
+console.log(finalScore(inning, 9));
 
 /* Task 4: 
 
@@ -104,8 +123,25 @@ and returns the score at each pont in the game, like so:
 
 Final Score: awayTeam - homeTeam */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function getInningScore(inningFunc) {
+  let home = 0;
+  let away = 0;
+  return function() {
+      home += inningFunc();
+      away += inningFunc();
+      return `awayTeam [${away}] - homeTeam [${home}]`;
+  }
 }
 
+function scoreboard(getInningScoreFunc, inningFunc, inningNum) {
+  let inningScore = getInningScoreFunc(inningFunc);
+  let currentInningScore;
+  for(let i = 1; i <= inningNum; i++) {
+      currentInningScore = inningScore();
+      console.log(`Inning ${i}: ${currentInningScore}`);
+  }
+  console.log(`Final Score: ${currentInningScore}`);
+}
+
+scoreboard(getInningScore, inning, 9);
 

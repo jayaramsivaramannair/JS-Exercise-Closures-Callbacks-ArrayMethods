@@ -44,6 +44,9 @@ Find the file `index.js` and complete the tasks until your tests are passing.
 Edit the `ReadMe` file with your answers.
 
 1. In your own words, define closure (1-2 sentences).
+`Answer: closure is created when a function is returned within an enclosing function. 
+Creation of a closure enables the inner function to make changes to not only its only own variable but also variables within local scope of the enclosing function.` 
+
 2. Study the following code, then answer the questions below.
 
 ```js
@@ -56,7 +59,6 @@ function personalDice(name){
 }
 
 const dansRoll = personalDice("Dan");
-
 const zoesRoll = personalDice("Zoe");
 
 
@@ -65,8 +67,16 @@ dansRoll();
 ```
 
 a. Where is closure used in this code? How can you tell?
+`Answer: closure, in case of the above code, is used by returning an anonymous function within personalDice function (enclosing function).
+One way to tell whether a closure is used is when another function is returned within an enclosing function and the said inner function makes a change or uses the variable/argument 
+which is local to the enclosing function. `
+
 b. Compare and contrast calling `dansRoll` the first and second time. What is always the same? What could change?
+`Answer: The thing which will remain same between each successive call of dansRoll is the name 'Dan'. 
+However, the value which will change between each successive call is value of the rolled number on the dice. `
+
 c. What is the lexical scope of `newRoll`? 
+`Answer: the variable newRoll can only be accessed within the anonymous function returned inside personalDice function and thus it has a function scope. `
 
 ### Task 3 - Stretch Goals
 
